@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Analysis</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Sentiment Analysis</h1>
+    <form id="sentiment-form">
+        <label for="text">Enter text:</label>
+        <textarea id="text" name="text" rows="4" cols="50"></textarea>
+        <button type="submit">Predict</button>
+    </form>
+    <div id="result"></div>
+
+    <script>
+        $("#sentiment-form").submit(function (event) {
+            event.preventDefault();
+
+            const text = $("#text").val();
+            if (!text) {
+                alert("Please enter text.");
+                return;
+            }
+            
+            
+            fetch('http://127.0.0.1:5000/predict',{method:'POST',mode:'no-cors', body: JSON.stringify(text)})
+            .then(response => response.json())
+            .then(json=>{
+                    $("#result").html('Is popular: '+ json.is_popular );
+                
+            })    
+
+
+        });
+    </script>
+</body>
+</html>
